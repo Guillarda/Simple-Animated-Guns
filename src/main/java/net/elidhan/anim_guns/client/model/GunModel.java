@@ -30,7 +30,7 @@ public class GunModel extends DefaultedItemGeoModel<GunItem>
     @Override
     public Identifier getTextureResource(GunItem object)
     {
-        return new Identifier(AnimatedGuns.MOD_ID, "textures/gun/"+object.getID()+".png");
+        return new Identifier(AnimatedGuns.MOD_ID, "textures/item/"+object.getID()+".png");
     }
 
     @Override

@@ -20,6 +20,7 @@ public class ModItems {
 	public static final Item LONG_BARREL = registerItem("long_barrel", new Item(new FabricItemSettings().maxCount(64)));
 	public static final Item SHORT_BARREL = registerItem("short_barrel", new Item(new FabricItemSettings().maxCount(64)));
 	public static final Item HEAVY_BARREL = registerItem("heavy_barrel", new Item(new FabricItemSettings().maxCount(64)));
+	public static final Item MULTI_BARREL = registerItem("multi_barrel", new Item(new FabricItemSettings().maxCount(64)));
 	public static final Item WOODEN_STOCK = registerItem("wooden_stock", new Item(new FabricItemSettings().maxCount(64)));
 	public static final Item MODERN_STOCK = registerItem("modern_stock", new Item(new FabricItemSettings().maxCount(64)));
 	public static final Item WOODEN_HANDGUARD = registerItem("wooden_handguard", new Item(new FabricItemSettings().maxCount(64)));
@@ -45,9 +46,11 @@ public class ModItems {
 	public static final Item RIOT_SHOTGUN_BLUEPRINT = registerItem("blueprint_shotgun_riot", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 	public static final Item DOUBLE_BARRELED_SHOTGUN_BLUEPRINT = registerItem("blueprint_shotgun_doublebarrel", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 	public static final Item CLASSIC_SNIPER_RIFLE_BLUEPRINT = registerItem("blueprint_sniper_classic", new BlueprintItem(new FabricItemSettings().maxCount(1)));
+	public static final Item ARCTIC_RIFLE_BLUEPRINT = registerItem("blueprint_sniper_arctic", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 	public static final Item BRUSH_GUN_BLUEPRINT = registerItem("blueprint_sniper_cowboy", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 	public static final Item MARKSMAN_RIFLE_BLUEPRINT = registerItem("blueprint_sniper_marksman", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 	public static final Item LMG_BLUEPRINT = registerItem("blueprint_lmg_m60", new BlueprintItem(new FabricItemSettings().maxCount(1)));
+	public static final Item MINIGUN_BLUEPRINT = registerItem("blueprint_lmg_minigun", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 	public static final Item ANTI_MATERIEL_RIFLE_BLUEPRINT = registerItem("blueprint_amr_classic", new BlueprintItem(new FabricItemSettings().maxCount(1)));
 
 	public static final Item STANDARD_HANDGUN_BULLET = registerItem("standard_handgun_cartridge", new Item(new FabricItemSettings().maxCount(64)));
@@ -77,10 +80,11 @@ public class ModItems {
 			1,
 			false,
 			false,
+			9,
 			10,
-			11,
-			21,
-			GunItem.FiringType.SEMI_AUTO)
+			20,
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.HANDGUN_TWOHAND)
 	{
 	});
 	public static final Item HEAVY_PISTOL = registerItem("pistol_heavy", new GunItem(new FabricItemSettings().maxCount(1),
@@ -104,16 +108,45 @@ public class ModItems {
 			1,
 			false,
 			false,
+			9,
 			10,
-			11,
-			21,
-			GunItem.FiringType.SEMI_AUTO)
+			20,
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.HANDGUN_TWOHAND)
+	{
+	});
+	public static final Item SERVICE_PISTOL = registerItem("pistol_service", new GunItem(new FabricItemSettings().maxCount(1),
+			"pistol_service",
+			"pistol_service",
+			8,
+			3,
+			7,
+			STANDARD_HANDGUN_BULLET,
+			42,
+			new float[] {0.25f, 0.25f},
+			new float[] {1.25f, 3.25f},
+			1,
+			GunItem.LoadingType.MAGAZINE,
+			null,
+			ModSounds.RELOAD_GENERIC_PISTOL_P1,
+			ModSounds.RELOAD_GENERIC_PISTOL_P2,
+			ModSounds.RELOAD_GENERIC_PISTOL_P3,
+			ModSounds.PISTOL_SERVICE,
+			null,
+			1,
+			false,
+			false,
+			0,
+			18,
+			24,
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.HANDGUN_ONEHAND)
 	{
 	});
     public static final Item MAGNUM_REVOLVER = registerItem("revolver_magnum", new GunItem(new FabricItemSettings().maxCount(1),
 			"revolver_magnum",
 			"revolver_generic",
-			11,
+			12,
             8,
             6,
             HEAVY_HANDGUN_BULLET,
@@ -131,16 +164,17 @@ public class ModItems {
             1,
             false,
 			false,
-            10,
+            9,
             20,
             30,
-			GunItem.FiringType.SEMI_AUTO)
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.HANDGUN_TWOHAND)
     {
     });
     public static final Item OLD_ARMY_REVOLVER = registerItem("revolver_coltarmy", new GunItem(new FabricItemSettings().maxCount(1),
             "revolver_coltarmy",
             "revolver_coltarmy",
-            11,
+            12,
             4,
             6,
             HEAVY_HANDGUN_BULLET,
@@ -158,10 +192,11 @@ public class ModItems {
             6,
             false,
 			false,
-            20,
-            21,
-            50,
-			GunItem.FiringType.SEMI_AUTO)
+            16,
+            17,
+            46,
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.REVOLVER_FANNING)
     {
     });
 	public static final Item MACHINE_PISTOL = registerItem("smg_machinepistol", new GunItem(new FabricItemSettings().maxCount(1),
@@ -188,13 +223,14 @@ public class ModItems {
 			10,
 			11,
 			21,
-			GunItem.FiringType.AUTO)
+			GunItem.FiringType.AUTO,
+			GunItem.ArmType.HANDGUN_TWOHAND)
 	{
 	});
     public static final Item HEAVY_SMG = registerItem("smg_heavy", new GunItem(new FabricItemSettings().maxCount(1),
             "smg_heavy",
             "smg_heavy",
-            5.5f,
+            6,
             2,
             25,
             STANDARD_HANDGUN_BULLET,
@@ -215,7 +251,8 @@ public class ModItems {
             20,
             27,
             49,
-			GunItem.FiringType.AUTO)
+			GunItem.FiringType.AUTO,
+			GunItem.ArmType.LONG_GUNS)
     {
     });
 
@@ -243,7 +280,8 @@ public class ModItems {
 			5,
 			21,
 			33,
-			GunItem.FiringType.AUTO)
+			GunItem.FiringType.AUTO,
+			GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
@@ -271,13 +309,14 @@ public class ModItems {
 		5,
 		21,
 		32,
-		GunItem.FiringType.AUTO)
+		GunItem.FiringType.AUTO,
+		GunItem.ArmType.LONG_GUNS)
 	{
 	});
 	public static final Item HEAVY_ASSAULT_RIFLE = registerItem("assaultrifle_heavy", new GunItem(new FabricItemSettings().maxCount(1),
 		"assaultrifle_heavy",
 		"assaultrifle_heavy",
-		8,
+		10,
 		3,
 		20,
 		STANDARD_RIFLE_BULLET,
@@ -298,7 +337,8 @@ public class ModItems {
 		5,
 		21,
 		32,
-		GunItem.FiringType.AUTO)
+		GunItem.FiringType.AUTO,
+		GunItem.ArmType.LONG_GUNS)
 	{
 	});
     public static final Item WAR_TORN_ASSAULT_RIFLE = registerItem("assaultrifle_rus", new GunItem(new FabricItemSettings().maxCount(1),
@@ -325,14 +365,15 @@ public class ModItems {
             10,
             24,
             39,
-			GunItem.FiringType.AUTO)
+			GunItem.FiringType.AUTO,
+			GunItem.ArmType.LONG_GUNS)
     {
     });
 
 	public static final Item DOUBLE_BARRELED_SHOTGUN = registerItem("shotgun_doublebarrel", new GunItem(new FabricItemSettings().maxCount(1),
 			"shotgun_doublebarrel",
 			"shotgun_doublebarrel",
-			7,
+			8,
 			2,
 			2,
 			SHOTGUN_SHELL,
@@ -350,19 +391,20 @@ public class ModItems {
 			1,
 			false,
 			false,
-			11,
-			12,
-			30,
-			GunItem.FiringType.SEMI_AUTO)
+			9,
+			10,
+			26,
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
 	public static final Item COMBAT_SHOTGUN = registerItem("shotgun_combat", new GunItem(new FabricItemSettings().maxCount(1),
 		"shotgun_combat",
 		"shotgun_combat",
-        5.5f,
-        14,
         6,
+        14,
+        8,
         SHOTGUN_SHELL,
         26,
 		new float[] {2.5f, 3.5f},
@@ -375,27 +417,28 @@ public class ModItems {
 		ModSounds.RELOAD_COMBAT_SHOTGUN_P3,
         ModSounds.SHOTGUN_COMBAT,
 		null,
-        6,
+        8,
         false,
 		false,
         4,
         5,
         15,
-		GunItem.FiringType.SEMI_AUTO)
+		GunItem.FiringType.SEMI_AUTO,
+		GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
     public static final Item RIOT_SHOTGUN = registerItem("shotgun_riot", new GunItem(new FabricItemSettings().maxCount(1),
             "shotgun_riot",
             "shotgun_riot",
-            2,
-            5,
-            8,
+            4,
+            3,
+            6,
             SHOTGUN_SHELL,
             28,
-			new float[] {2f, 15f},
+			new float[] {2.5f, 12f},
             new float[] {2f, 6.25f},
-            20,
+            12,
             GunItem.LoadingType.PER_CARTRIDGE,
             null,
             ModSounds.RELOAD_RIOT_SHOTGUN_P1,
@@ -403,20 +446,21 @@ public class ModItems {
             ModSounds.RELOAD_RIOT_SHOTGUN_P3,
             ModSounds.SHOTGUN_RIOT,
 			null,
-            8,
+            6,
             false,
 			false,
             4,
             5,
             17,
-			GunItem.FiringType.AUTO)
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.LONG_GUNS)
     {
     });
 
 	public static final Item CLASSIC_SNIPER_RIFLE = registerItem("sniper_classic", new GunItem(new FabricItemSettings().maxCount(1),
 		"sniper_classic",
 		"sniper_classic",
-        22,
+        24,
         18,
         5,
         HEAVY_RIFLE_BULLET,
@@ -437,9 +481,39 @@ public class ModItems {
         12,
         13,
         24,
-		GunItem.FiringType.SEMI_AUTO)
+		GunItem.FiringType.SEMI_AUTO,
+		GunItem.ArmType.LONG_GUNS)
 	{
 	});
+
+    public static final Item ARCTIC_SNIPER_RIFLE = registerItem("sniper_arctic", new GunItem(new FabricItemSettings().maxCount(1),
+            "sniper_arctic",
+            "sniper_arctic",
+            28,
+            22,
+            10,
+            HEAVY_RIFLE_BULLET,
+            75,
+            new float[] {0.0625f, 0.0625f},
+            new float[]{6.25f, 7.5f},
+            1,
+            GunItem.LoadingType.MAGAZINE,
+            ModSounds.RELOAD_GENERIC_SNIPER_P0,
+            ModSounds.RELOAD_GENERIC_SNIPER_P1,
+            ModSounds.RELOAD_GENERIC_SNIPER_P2,
+            ModSounds.RELOAD_GENERIC_SNIPER_P3,
+            ModSounds.SNIPER_ARCTIC,
+            null,
+            1,
+            true,
+            true,
+            28,
+            48,
+            68,
+            GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.LONG_GUNS)
+    {
+    });
 
 	public static final Item BRUSH_GUN = registerItem("sniper_cowboy", new GunItem(new FabricItemSettings().maxCount(1),
 			"sniper_cowboy",
@@ -465,14 +539,15 @@ public class ModItems {
 			8,
 			9,
 			21,
-			GunItem.FiringType.SEMI_AUTO)
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
 	public static final Item MARKSMAN_RIFLE = registerItem("sniper_marksman", new GunItem(new FabricItemSettings().maxCount(1),
 			"sniper_marksman",
 			"sniper_marksman",
-			10,
+			12,
 			4,
 			20,
 			STANDARD_RIFLE_BULLET,
@@ -493,14 +568,15 @@ public class ModItems {
 			21,
 			35,
 			40,
-			GunItem.FiringType.SEMI_AUTO)
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
 	public static final Item LMG = registerItem("lmg_m60", new GunItem(new FabricItemSettings().maxCount(1),
 			"lmg_m60",
 			"lmg_m60",
-			7,
+			8,
 			3,
 			100,
 			STANDARD_RIFLE_BULLET,
@@ -521,14 +597,15 @@ public class ModItems {
 			49,
 			70,
 			90,
-			GunItem.FiringType.AUTO)
+			GunItem.FiringType.AUTO,
+			GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
 	public static final Item ANTI_MATERIEL_RIFLE = registerItem("amr_classic", new GunItem(new FabricItemSettings().maxCount(1),
 			"amr_classic",
 			"amr_classic",
-			35,
+			40,
 			28,
 			5,
 			HEAVY_RIFLE_BULLET,
@@ -549,7 +626,8 @@ public class ModItems {
 			28,
 			48,
 			68,
-			GunItem.FiringType.SEMI_AUTO)
+			GunItem.FiringType.SEMI_AUTO,
+			GunItem.ArmType.LONG_GUNS)
 	{
 	});
 
@@ -560,24 +638,25 @@ public class ModItems {
 			1,
 			500,
 			STANDARD_RIFLE_BULLET,
-			117,
+			140,
 			new float[] {1.5f, 1.5f},
-			new float[] {1.5f, 2.5f},
+			new float[] {0.5f, 1f},
 			1,
 			GunItem.LoadingType.MAGAZINE,
-			ModSounds.RELOAD_M60_P0,
-			ModSounds.RELOAD_M60_P1,
-			ModSounds.RELOAD_M60_P2,
-			ModSounds.RELOAD_M60_P3,
+			ModSounds.RELOAD_MINIGUN_P0,
+			ModSounds.RELOAD_MINIGUN_P1,
+			ModSounds.RELOAD_MINIGUN_P2,
+			null,
 			ModSounds.LMG_MINIGUN,
 			ModSounds.LMG_MINIGUN_POST,
 			1,
 			false,
 			false,
-			49,
-			70,
-			90,
-			GunItem.FiringType.AUTO)
+			37,
+			85,
+			133,
+			GunItem.FiringType.AUTO,
+			GunItem.ArmType.MINIGUN)
 	{
 	});
 

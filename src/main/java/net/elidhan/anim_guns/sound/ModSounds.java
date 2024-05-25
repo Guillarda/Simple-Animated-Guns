@@ -13,6 +13,7 @@ public class ModSounds
     public static SoundEvent RELOAD_GENERIC_PISTOL_P3 = registerSoundEvent("generic_pistol_p3");
     public static SoundEvent PISTOL_LIGHT = registerSoundEvent("pistol_light");
     public static SoundEvent PISTOL_HEAVY = registerSoundEvent("pistol_heavy");
+    public static SoundEvent PISTOL_SERVICE = registerSoundEvent("pistol_service");
     public static SoundEvent RELOAD_OLD_ARMY_REVOLVER_P1 = registerSoundEvent("oldarmy_revolver_p1");
     public static SoundEvent RELOAD_OLD_ARMY_REVOLVER_P2 = registerSoundEvent("oldarmy_revolver_p2");
     public static SoundEvent RELOAD_OLD_ARMY_REVOLVER_P3 = registerSoundEvent("oldarmy_revolver_p3");
@@ -68,6 +69,7 @@ public class ModSounds
     public static SoundEvent RELOAD_BRUSH_GUN_P2 = registerSoundEvent("brush_gun_p2");
     public static SoundEvent RELOAD_BRUSH_GUN_P3 = registerSoundEvent("brush_gun_p3");
     public static SoundEvent SNIPER_CLASSIC = registerSoundEvent("sniper_classic");
+    public static SoundEvent SNIPER_ARCTIC = registerSoundEvent("sniper_arctic");
     public static SoundEvent SNIPER_COWBOY = registerSoundEvent("sniper_cowboy");
     public static SoundEvent RELOAD_MARKSMAN_RIFLE_P0 = registerSoundEvent("marksman_sniper_p0");
     public static SoundEvent RELOAD_MARKSMAN_RIFLE_P1 = registerSoundEvent("marksman_sniper_p1");
@@ -80,6 +82,9 @@ public class ModSounds
     public static SoundEvent RELOAD_M60_P3 = registerSoundEvent("m60_p3");
     public static SoundEvent LMG_M60 = registerSoundEvent("lmg_m60");
     public static SoundEvent AMR_CLASSIC = registerSoundEvent("amr_classic");
+    public static SoundEvent RELOAD_MINIGUN_P0 = registerSoundEvent("minigun_p0");
+    public static SoundEvent RELOAD_MINIGUN_P1 = registerSoundEvent("minigun_p1");
+    public static SoundEvent RELOAD_MINIGUN_P2 = registerSoundEvent("minigun_p2");
     public static SoundEvent LMG_MINIGUN = registerSoundEvent("lmg_minigun");
     public static SoundEvent LMG_MINIGUN_POST = registerSoundEvent("lmg_minigun_post");
 

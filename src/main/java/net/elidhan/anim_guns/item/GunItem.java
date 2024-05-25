@@ -94,6 +94,7 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
     private final int reloadStage2;
     private final int reloadStage3;
     public final FiringType firingType;
+    public final ArmType armType;
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
     protected final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
@@ -105,7 +106,7 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
                    float[] gunRecoil, int pelletCount, LoadingType loadingType,
                    SoundEvent reloadSoundStart, SoundEvent reloadSoundMagOut, SoundEvent reloadSoundMagIn, SoundEvent reloadSoundEnd,
                    SoundEvent shootSound, SoundEvent postShootSound, int reloadCycles, boolean isScoped, boolean unscopeAfterShot,
-                   int reloadStage1, int reloadStage2, int reloadStage3, FiringType firingType)
+                   int reloadStage1, int reloadStage2, int reloadStage3, FiringType firingType, ArmType armType)
     {
         super(settings.maxDamage((magSize * 10) + 1));
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
@@ -135,6 +136,7 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
         this.reloadStage2 = reloadStage2;
         this.reloadStage3 = reloadStage3;
         this.firingType = firingType;
+        this.armType = armType;
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(GunAttributes.GUN_DAMAGE, new EntityAttributeModifier(BULLET_DAMAGE_MODIFIER_ID, "Weapon modifier", this.gunDamage, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
@@ -286,24 +288,25 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
 
         final long id = GeoItem.getId(stack);
         AnimationController<GeoAnimatable> animationController = getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-        boolean bl = animationController.isPlayingTriggeredAnimation() && animationController.getCurrentAnimation() != null && animationController.getCurrentAnimation().animation().name().equals("sprinting");
 
         if (world.isClient())
         {
-            if (isSprinting
-                    && !mainHandGun.getOrCreateNbt().getBoolean("isAiming")
-                    && mainHandGun == stack
-                    && !mainHandGun.getOrCreateNbt().getBoolean("isReloading")
-                    && !bl
-                    && (!animationController.getCurrentAnimation().animation().name().equals("melee") || animationController.getAnimationState().equals(AnimationController.State.PAUSED)))
+            if (animationController.getCurrentAnimation() != null && !animationController.getAnimationState().equals(AnimationController.State.STOPPED))
             {
-                animationController.tryTriggerAnimation("sprinting");
+                if (isSprinting
+                        && !mainHandGun.getOrCreateNbt().getBoolean("isAiming")
+                        && mainHandGun == stack
+                        && !mainHandGun.getOrCreateNbt().getBoolean("isReloading")
+                        && !(animationController.isPlayingTriggeredAnimation() && animationController.getCurrentAnimation().animation().name().equals("sprinting"))
+                        && (!animationController.getCurrentAnimation().animation().name().equals("melee") || animationController.getAnimationState().equals(AnimationController.State.PAUSED)))
+                {
+                    animationController.tryTriggerAnimation("sprinting");
+                }
+                else if ((!isSprinting || mainHandGun != stack) && (animationController.isPlayingTriggeredAnimation() && animationController.getCurrentAnimation().animation().name().equals("sprinting")) && (!animationController.getCurrentAnimation().animation().name().equals("melee") || animationController.getAnimationState().equals(AnimationController.State.PAUSED)))
+                {
+                    animationController.tryTriggerAnimation(!mainHandGun.getOrCreateNbt().getBoolean("isAiming") ? "idle" : "aim");
+                }
             }
-            else if ((!isSprinting || mainHandGun != stack) && bl && (!animationController.getCurrentAnimation().animation().name().equals("melee") || animationController.getAnimationState().equals(AnimationController.State.PAUSED)))
-            {
-                animationController.tryTriggerAnimation(!mainHandGun.getOrCreateNbt().getBoolean("isAiming") ? "idle" : "aim");
-            }
-
             if (mainHandGun == stack
                     && AnimatedGunsClient.reloadToggle.isPressed()
                     && remainingAmmo(stack) < this.magSize
@@ -586,11 +589,11 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
         {
             switch (gunItemSoundKeyframeEvent.getKeyframeData().getSound())
             {
-                case "reload_start" -> player.playSound(this.reloadSoundStart, SoundCategory.MASTER, 1, 1);
-                case "reload_magout" -> player.playSound(this.reloadSoundMagOut, SoundCategory.MASTER, 1, 1);
-                case "reload_magin" -> player.playSound(this.reloadSoundMagIn, SoundCategory.MASTER, 1, 1);
-                case "reload_end" -> player.playSound(this.reloadSoundEnd, SoundCategory.MASTER, 1, 1);
-                case "post_shoot" -> player.playSound(this.postShootSound, SoundCategory.MASTER, 1, 1);
+                case "reload_start" -> player.playSound(this.reloadSoundStart, SoundCategory.PLAYERS, 1, 1);
+                case "reload_magout" -> player.playSound(this.reloadSoundMagOut, SoundCategory.PLAYERS, 1, 1);
+                case "reload_magin" -> player.playSound(this.reloadSoundMagIn, SoundCategory.PLAYERS, 1, 1);
+                case "reload_end" -> player.playSound(this.reloadSoundEnd, SoundCategory.PLAYERS, 1, 1);
+                case "post_shoot" -> player.playSound(this.postShootSound, SoundCategory.PLAYERS, 1, 1);
                 case "melee" -> player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, 1, 1);
             }
         }
@@ -624,6 +627,43 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
         return this.isScoped;
     }
 
+    public ArmType getArmType()
+    {
+        return this.armType;
+    }
+
+    public int getSightID(ItemStack gun)
+    {
+        NbtCompound gunNBT = gun.getOrCreateNbt();
+        if (!gunNBT.contains("sightID")) gunNBT.putInt("sightID", 0);
+
+        return gun.getOrCreateNbt().getInt("sightID");
+    }
+
+    public float getSightHeight(ItemStack gun)
+    {
+        NbtCompound gunNBT = gun.getOrCreateNbt();
+        if (!gunNBT.contains("sightHeight")) gunNBT.putFloat("sightHeight", 0);
+
+        return gun.getOrCreateNbt().getFloat("sightHeight");
+    }
+
+    public int getGripID(ItemStack gun)
+    {
+        NbtCompound gunNBT = gun.getOrCreateNbt();
+        if (!gunNBT.contains("gripID")) gunNBT.putInt("gripID", 0);
+
+        return gun.getOrCreateNbt().getInt("gripID");
+    }
+
+    public int getMuzzleID(ItemStack gun)
+    {
+        NbtCompound gunNBT = gun.getOrCreateNbt();
+        if (!gunNBT.contains("muzzleID")) gunNBT.putInt("muzzleID", 0);
+
+        return gun.getOrCreateNbt().getInt("muzzleID");
+    }
+
     public enum LoadingType
     {
         MAGAZINE,
@@ -634,5 +674,14 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
     {
         SEMI_AUTO,
         AUTO
+    }
+
+    public enum ArmType
+    {
+        HANDGUN_ONEHAND,
+        HANDGUN_TWOHAND,
+        REVOLVER_FANNING,
+        LONG_GUNS,
+        MINIGUN
     }
 }

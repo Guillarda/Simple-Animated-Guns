@@ -54,6 +54,7 @@ public class AnimatedGuns implements ModInitializer {
         entries.add(new ItemStack(ModItems.LONG_BARREL));
         entries.add(new ItemStack(ModItems.SHORT_BARREL));
         entries.add(new ItemStack(ModItems.HEAVY_BARREL));
+        entries.add(new ItemStack(ModItems.MULTI_BARREL));
         entries.add(new ItemStack(ModItems.WOODEN_STOCK));
         entries.add(new ItemStack(ModItems.MODERN_STOCK));
         entries.add(new ItemStack(ModItems.WOODEN_HANDGUARD));
@@ -79,9 +80,11 @@ public class AnimatedGuns implements ModInitializer {
         entries.add(new ItemStack(ModItems.RIOT_SHOTGUN_BLUEPRINT));
         entries.add(new ItemStack(ModItems.DOUBLE_BARRELED_SHOTGUN_BLUEPRINT));
         entries.add(new ItemStack(ModItems.CLASSIC_SNIPER_RIFLE_BLUEPRINT));
+        entries.add(new ItemStack(ModItems.ARCTIC_RIFLE_BLUEPRINT));
         entries.add(new ItemStack(ModItems.BRUSH_GUN_BLUEPRINT));
         entries.add(new ItemStack(ModItems.MARKSMAN_RIFLE_BLUEPRINT));
         entries.add(new ItemStack(ModItems.LMG_BLUEPRINT));
+        entries.add(new ItemStack(ModItems.MINIGUN_BLUEPRINT));
         entries.add(new ItemStack(ModItems.ANTI_MATERIEL_RIFLE_BLUEPRINT));
         entries.add(new ItemStack(ModItems.STANDARD_HANDGUN_BULLET));
         entries.add(new ItemStack(ModItems.HEAVY_HANDGUN_BULLET));
@@ -92,6 +95,7 @@ public class AnimatedGuns implements ModInitializer {
     public static final ItemGroup GUNS = FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.MAGNUM_REVOLVER)).entries((displayContext, entries) -> {
         entries.add(new ItemStack(ModItems.PISTOL));
         entries.add(new ItemStack(ModItems.HEAVY_PISTOL));
+        entries.add(new ItemStack(ModItems.SERVICE_PISTOL));
         entries.add(new ItemStack(ModItems.MAGNUM_REVOLVER));
         entries.add(new ItemStack(ModItems.OLD_ARMY_REVOLVER));
         entries.add(new ItemStack(ModItems.MACHINE_PISTOL));
@@ -104,6 +108,7 @@ public class AnimatedGuns implements ModInitializer {
         entries.add(new ItemStack(ModItems.COMBAT_SHOTGUN));
         entries.add(new ItemStack(ModItems.RIOT_SHOTGUN));
         entries.add(new ItemStack(ModItems.CLASSIC_SNIPER_RIFLE));
+        entries.add(new ItemStack(ModItems.ARCTIC_SNIPER_RIFLE));
         entries.add(new ItemStack(ModItems.BRUSH_GUN));
         entries.add(new ItemStack(ModItems.MARKSMAN_RIFLE));
         entries.add(new ItemStack(ModItems.LMG));
