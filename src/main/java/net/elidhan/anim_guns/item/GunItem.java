@@ -216,7 +216,7 @@ public abstract class GunItem extends RangedWeaponItem implements FabricItem, Ge
                 user.getX(),
                 user.getY(),
                 user.getZ(),
-                this.shootSound, SoundCategory.MASTER, 1.0f, 1.0f);
+                this.shootSound, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
         if (this.reloadCycles > 1)
         {
